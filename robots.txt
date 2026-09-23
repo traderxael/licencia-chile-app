@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://traderxael.github.io/licencia-chile-app/sitemap.xml

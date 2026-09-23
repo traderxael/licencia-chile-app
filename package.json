@@ -1,0 +1,13 @@
+{
+  "name": "licencia-chile-app",
+  "version": "2.0.0",
+  "private": true,
+  "description": "PWA chilena para practicar exámenes de licencia B, C, CR, A1-A5, D, E y F.",
+  "scripts": {
+    "dev": "node server.js",
+    "check": "node --check data.js && node --check core.js && node --check app.js && node --check sw.js && node --check server.js",
+    "test": "node --test tests/core.test.js"
+  },
+  "keywords": ["chile", "licencia", "conaset", "examen", "pwa"],
+  "license": "MIT"
+}

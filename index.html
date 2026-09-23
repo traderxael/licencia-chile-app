@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es-CL" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self';script-src 'self';style-src 'self';img-src 'self' data:;connect-src 'self';base-uri 'self';form-action 'none'">
+  <title>Licencia Chile | Simulador de exámenes B, C, A y especiales</title>
+  <meta name="description" content="App chilena para practicar el examen de licencia de conducir: clases B, C, CR, A1-A5, D, E y F, señales, trámite y experiencia offline.">
+  <meta name="theme-color" content="#f7f8fc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#081b33" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Licencia CL">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="canonical" href="https://traderxael.github.io/licencia-chile-app/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_CL">
+  <meta property="og:site_name" content="Licencia Chile">
+  <meta property="og:title" content="Licencia Chile | Simulador de exámenes">
+  <meta property="og:description" content="Practica B, C, CR, A1-A5, D, E y F con preguntas originales, señales y guía de trámite.">
+  <meta property="og:url" content="https://traderxael.github.io/licencia-chile-app/">
+  <meta property="og:image" content="https://traderxael.github.io/licencia-chile-app/icons/social.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Licencia Chile | Simulador de exámenes">
+  <meta name="twitter:description" content="Preparation libre y offline para obtener tu licencia de conducir en Chile.">
+  <meta name="twitter:image" content="https://traderxael.github.io/licencia-chile-app/icons/social.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Ir al contenido</a>
+  <header class="app-header">
+    <div class="topbar">
+      <a class="brand" href="#inicio" data-view="inicio" aria-label="Licencia Chile, inicio">
+        <span class="brand-mark" aria-hidden="true">CL</span>
+        <span class="brand-copy">
+          <strong>Licencia Chile</strong>
+          <small>Estudio libre y offline</small>
+        </span>
+      </a>
+      <div class="header-actions">
+        <span class="network-pill" id="network-status">En línea</span>
+        <button class="pill-button" id="class-pill" type="button" data-action="show-classes">Clase B</button>
+        <button class="icon-button" id="theme-toggle" type="button" data-action="toggle-theme" aria-label="Cambiar tema">Oscuro</button>
+      </div>
+    </div>
+    <div class="progress-header">
+      <div class="level-line">
+        <span id="xp-label">Nivel 1 · 0 XP</span>
+        <span id="streak-label">Racha: 0 días</span>
+      </div>
+      <div class="progress-track" role="progressbar" aria-label="Progreso al siguiente nivel" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <span id="xp-fill"></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="update-banner" id="update-banner" hidden>
+    <span>Hay una versión nueva disponible.</span>
+    <button class="button button-small button-primary" type="button" data-action="apply-update">Actualizar</button>
+  </div>
+
+  <main id="contenido" tabindex="-1">
+    <section class="view active" id="view-inicio" data-title="Inicio">
+      <div class="hero">
+        <span class="eyebrow">PWA Chile · Sin registro</span>
+        <h1>Prepara tu examen sin perder tiempo</h1>
+        <p id="hero-text">Preguntas originales para entender las reglas, practicar por temas y medir tu preparación.</p>
+        <div class="format-card" id="hero-format"></div>
+        <div class="button-row">
+          <button class="button button-primary" type="button" data-action="start-exam">Rendir simulacro</button>
+          <button class="button button-light" type="button" data-view="practica">Practicar 10</button>
+        </div>
+        <small>No es el examen oficial ni garantiza un resultado. La municipalidad utiliza un sistema centralizado.</small>
+      </div>
+
+      <div class="feature-grid">
+        <button class="feature-card" type="button" data-view="clases">
+          <span class="feature-label">Clases</span>
+          <strong>B, C, CR, A1-A5, D, E y F</strong>
+          <span>Qué vehículo habilita cada licencia</span>
+        </button>
+        <button class="feature-card" type="button" data-view="senales">
+          <span class="feature-label">Señales</span>
+          <strong>24 señales chilenas</strong>
+          <span>Tarjetas con explicación y progreso</span>
+        </button>
+        <button class="feature-card" type="button" data-view="tramite">
+          <span class="feature-label">Trámite</span>
+          <strong>Checklist municipal</strong>
+          <span>Documentos, orden y fuentes oficiales</span>
+        </button>
+        <button class="feature-card" type="button" data-view="practico">
+          <span class="feature-label">Práctico</span>
+          <strong>Clase B, C y profesional</strong>
+          <span>Maniobras y errores que debes evitar</span>
+        </button>
+      </div>
+
+      <section class="card study-card">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Plan de 10 minutos</span>
+            <h2>Estudio diario</h2>
+          </div>
+          <span class="status-chip" id="daily-status">Empieza ahora</span>
+        </div>
+        <ol class="study-steps">
+          <li><span>1</span><div><strong>Ronda corta</strong><small>Diez preguntas con explicación inmediata.</small></div></li>
+          <li><span>2</span><div><strong>Repasa tus errores</strong><small>La app recuerda preguntas que fallaste.</small></div></li>
+          <li><span>3</span><div><strong>Simula sin pausas</strong><small>Comprueba tu resultado bajo condiciones reales.</small></div></li>
+        </ol>
+        <label class="select-label" for="practice-topic">Tema de práctica</label>
+        <select id="practice-topic"></select>
+        <div class="button-row">
+          <button class="button button-dark" type="button" data-action="start-practice">Practicar tema</button>
+          <button class="button button-ghost" type="button" data-action="start-weak">Solo mis errores</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Tu avance</span>
+            <h2>Progreso</h2>
+          </div>
+          <button class="text-button" type="button" data-view="progreso">Ver detalle</button>
+        </div>
+        <div class="metric-grid" id="home-metrics"></div>
+        <div class="mastery-line">
+          <span>Dominio de señales</span>
+          <strong id="signal-mastery">0%</strong>
+        </div>
+        <div class="progress-track light"><span id="signal-fill"></span></div>
+      </section>
+
+      <section class="trust-card">
+        <strong>Fuentes y límites</strong>
+        <p>La app usa contenido educativo original. Verifica siempre el libro, el formato y los requisitos vigentes en CONASET, ChileAtiende y tu municipalidad.</p>
+        <a href="https://mejoresconductores.conaset.cl/" target="_blank" rel="noopener">Material oficial CONASET</a>
+      </section>
+    </section>
+
+    <section class="view" id="view-clases" data-title="Clases">
+      <div class="page-heading">
+        <div><span class="eyebrow">Elige tu permiso</span><h1>Clases de licencia</h1></div>
+        <button class="button button-ghost button-small" type="button" data-view="inicio">Volver</button>
+      </div>
+      <div class="class-tabs" id="class-tabs" role="tablist" aria-label="Clases de licencia"></div>
+      <div id="class-detail" class="class-detail" aria-live="polite"></div>
+    </section>
+
+    <section class="view" id="view-examen" data-title="Examen">
+      <div class="page-heading">
+        <div><span class="eyebrow">Modo cronometrado</span><h1>Simulador de examen</h1></div>
+        <button class="button button-ghost button-small" type="button" data-action="exit-exam">Salir</button>
+      </div>
+      <div class="card exam-start" id="exam-empty">
+        <h2 id="exam-class-title">Preparar simulacro</h2>
+        <p id="exam-class-description"></p>
+        <div class="format-card" id="exam-format"></div>
+        <button class="button button-primary" type="button" data-action="start-exam">Comenzar</button>
+      </div>
+      <div id="exam-active" hidden>
+        <div class="exam-toolbar">
+          <div><span class="status-chip" id="exam-class-chip">Clase B</span><span id="exam-note"></span></div>
+          <div class="timer" id="exam-timer" role="timer">Sin límite</div>
+        </div>
+        <div class="question-progress">
+          <div class="progress-track"><span id="exam-progress"></span></div>
+          <span id="exam-status">0 contestadas</span>
+        </div>
+        <div class="question-nav" id="question-nav" aria-label="Navegación de preguntas"></div>
+        <article class="question-card" aria-live="polite">
+          <div class="question-meta" id="question-meta"></div>
+          <h2 id="question-text"></h2>
+          <div class="options" id="question-options"></div>
+        </article>
+        <div class="button-row sticky-actions">
+          <button class="button button-ghost" type="button" data-action="exam-prev">Anterior</button>
+          <button class="button button-dark" type="button" data-action="exam-next">Siguiente</button>
+        </div>
+        <button class="button button-primary finish-button" type="button" data-action="finish-exam">Terminar y ver resultado</button>
+      </div>
+      <section class="card result-card" id="exam-result" hidden aria-live="assertive"></section>
+    </section>
+
+    <section class="view" id="view-practica" data-title="Práctica">
+      <div class="page-heading">
+        <div><span class="eyebrow">Aprende con explicación</span><h1>Práctica por temas</h1></div>
+        <button class="button button-ghost button-small" type="button" data-view="inicio">Volver</button>
+      </div>
+      <section class="card">
+        <p>Diez preguntas por ronda. Al responder verás la explicación y podrás continuar con la siguiente.</p>
+        <label class="select-label" for="practice-topic-page">Tema</label>
+        <select id="practice-topic-page"></select>
+        <div class="button-row">
+          <button class="button button-primary" type="button" data-action="start-practice">Nueva ronda</button>
+          <button class="button button-ghost" type="button" data-action="start-weak">Repetir errores</button>
+        </div>
+      </section>
+      <section class="card" id="practice-active" hidden>
+        <div class="question-progress">
+          <div class="progress-track"><span id="practice-progress"></span></div>
+          <span id="practice-status"></span>
+        </div>
+        <div class="question-meta" id="practice-meta"></div>
+        <h2 id="practice-question"></h2>
+        <div class="options" id="practice-options"></div>
+        <div class="feedback" id="practice-feedback" aria-live="polite"></div>
+        <button class="button button-dark practice-next" type="button" data-action="practice-next">Siguiente pregunta</button>
+      </section>
+    </section>
+
+    <section class="view" id="view-senales" data-title="Señales">
+      <div class="page-heading">
+        <div><span class="eyebrow">Memoria visual</span><h1>Señales de tránsito</h1></div>
+        <button class="button button-ghost button-small" type="button" data-view="inicio">Volver</button>
+      </div>
+      <div class="filter-row" id="signal-filters" aria-label="Filtrar señales"></div>
+      <div class="mastery-line"><span id="signal-count">0 de 24 aprendidas</span><strong id="signal-percent">0%</strong></div>
+      <div class="progress-track light"><span id="signal-progress"></span></div>
+      <div class="signal-grid" id="signal-grid"></div>
+    </section>
+
+    <section class="view" id="view-tramite" data-title="Trámite">
+      <div class="page-heading">
+        <div><span class="eyebrow">Paso a paso</span><h1>Trámite en la municipalidad</h1></div>
+        <button class="button button-ghost button-small" type="button" data-view="inicio">Volver</button>
+      </div>
+      <section class="card">
+        <p>El orden puede variar según comuna. La municipalidad es la autoridad responsable del trámite.</p>
+        <div class="checklist" id="checklist"></div>
+        <div class="mastery-line"><span>Avance guardado</span><strong id="checklist-percent">0%</strong></div>
+        <div class="progress-track light"><span id="checklist-progress"></span></div>
+      </section>
+      <section class="card info-card">
+        <span class="eyebrow">Primera licencia B, C o CR</span>
+        <h2>Documentos generales</h2>
+        <p>Cédula vigente, egreso de enseñanza básica o acreditación equivalente, antecedentes y documentos de residencia solicitados por tu comuna.</p>
+        <p>Además debes aprobar idoneidad moral, médico, sensométrico, teórico y práctico.</p>
+        <h3>Costo</h3>
+        <p>Depende de la municipalidad y de la UTM vigente. Consulta el valor total antes de pagar.</p>
+      </section>
+      <section class="card info-card">
+        <span class="eyebrow">Excepción 17 años</span>
+        <h2>Licencia B acompañada</h2>
+        <p>A los 17 se puede obtener B mediante el curso y autorizaciones exigidos. Se conduce acompañado por una persona con licencia B y antigüedad mínima de 5 años hasta cumplir 18.</p>
+      </section>
+      <section class="card source-card">
+        <h2>Fuentes oficiales</h2>
+        <a href="https://www.chileatiende.gob.cl/fichas/24065-licencia-de-conducir-no-profesional-clase-b" target="_blank" rel="noopener">ChileAtiende · Clase B</a>
+        <a href="https://www.chileatiende.gob.cl/fichas/24034-licencia-de-conducir-profesional-clase-a" target="_blank" rel="noopener">ChileAtiende · Clase A</a>
+        <a href="https://mejoresconductores.conaset.cl/" target="_blank" rel="noopener">CONASET · Mejores conductores</a>
+      </section>
+    </section>
+
+    <section class="view" id="view-practico" data-title="Práctico">
+      <div class="page-heading">
+        <div><span class="eyebrow">Preparación corporal y mental</span><h1>Examen práctico</h1></div>
+        <button class="button button-ghost button-small" type="button" data-view="inicio">Volver</button>
+      </div>
+      <section class="card">
+        <h2>Clase B</h2>
+        <p>El examen se organiza en conducción libre y conducción guiada. Revisa las faltas reprobatorias, graves y leves vigentes en tu comuna.</p>
+        <details open>
+          <summary>Antes de partir</summary>
+          <ul><li>Documentos y vehículo en condiciones legales.</li><li>Ajusta asiento, espejos, cinturón y controles.</li><li>Revisa puntos ciegos antes de cambiar de pista o virar.</li><li>Conduce con suavidad y deja margen de reacción.</li></ul>
+        </details>
+        <details>
+          <summary>No subestimes estas faltas</summary>
+          <ul><li>No respetar PARE, una orden del evaluador o circular en contra del tránsito.</li><li>Maniobras peligrosas o intervención del examinador.</li><li>Incumplir señales, límites o medidas de seguridad evaluadas como reprobatorias.</li></ul>
+        </details>
+      </section>
+      <section class="card">
+        <h2>Clase C y CR</h2>
+        <p>El circuito evalúa controles, postura, equilibrio, documentos, luces, zigzag, figuras, frenado y detención. Algunas maniobras tienen tiempo máximo.</p>
+        <details open>
+          <summary>Reglas que más importan</summary>
+          <ul><li>Casco correctamente puesto y abrochado.</li><li>Identificar documentos, mandos, luces y frenos.</li><li>Recoger el soporte antes de iniciar.</li><li>No soltar el manillar, apagar el motor ni rebasar conos.</li></ul>
+        </details>
+      </section>
+      <section class="card">
+        <h2>Clase profesional</h2>
+        <p>Además del examen, el proceso puede exigir curso reconocido, controles de salud, idoneidad y reexamen dentro de los plazos municipales.</p>
+      </section>
+    </section>
+
+    <section class="view" id="view-progreso" data-title="Progreso">
+      <div class="page-heading">
+        <div><span class="eyebrow">Datos locales</span><h1>Mi progreso</h1></div>
+        <button class="button button-ghost button-small" type="button" data-view="inicio">Volver</button>
+      </div>
+      <section class="card">
+        <div class="metric-grid" id="progress-metrics"></div>
+      </section>
+      <section class="card">
+        <span class="eyebrow">Repaso inteligente</span>
+        <h2>Temas con más errores</h2>
+        <div class="topic-list" id="weak-topics"></div>
+        <button class="button button-primary" type="button" data-action="start-weak">Practicar solo errores</button>
+      </section>
+      <section class="card">
+        <h2>Tus datos</h2>
+        <p>El progreso se guarda solo en este dispositivo y no incluye datos personales.</p>
+        <div class="button-row">
+          <button class="button button-ghost" type="button" data-action="export-data">Exportar</button>
+          <button class="button button-ghost" type="button" data-action="import-data">Importar</button>
+        </div>
+        <input id="import-file" type="file" accept="application/json,.json" hidden>
+        <button class="danger-button" type="button" data-action="reset-data">Borrar todo el progreso</button>
+      </section>
+    </section>
+  </main>
+
+  <nav class="tabbar" aria-label="Navegación principal">
+    <button type="button" data-view="inicio" class="active" aria-current="page"><span>Inicio</span></button>
+    <button type="button" data-view="clases"><span>Clases</span></button>
+    <button type="button" data-action="open-exam"><span>Examen</span></button>
+    <button type="button" data-view="senales"><span>Señales</span></button>
+    <button type="button" data-view="tramite"><span>Trámite</span></button>
+  </nav>
+
+  <div class="install-banner" id="install-banner" hidden>
+    <div><strong>Instala Licencia Chile</strong><span>Acceso rápido y funcionamiento sin internet.</span></div>
+    <button class="button button-primary button-small" type="button" data-action="install-app">Instalar</button>
+    <button class="icon-button" type="button" data-action="dismiss-install" aria-label="Cerrar">Cerrar</button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="data.js"></script>
+  <script src="core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
